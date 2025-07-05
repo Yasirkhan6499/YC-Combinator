@@ -6,26 +6,28 @@ import React from 'react';
 import Image from 'next/image';
 import  Link  from 'next/link';
 import { Button } from './ui/button';
+import { Author, Startup } from '@/sanity/types';
 
 // Define the StartupCardType type
-type StartupCardType = {
-  _createAt: string;
-  views: number;
-  author: { _id: number, name: string };
-  _id: number;
-  description: string;
-  image: string;
-  category: string;
-  title: string;
-};
+export type StartupTypeCard = Omit<Startup, "author"> & { author?: Author };
 
-const StartupCard = ({ post }: { post: StartupCardType }) => {
-    const {_createAt, views, author:{_id:authorId, name}, _id, image, category, title, description} = post;
+const StartupCard = ({ post }: { post: StartupTypeCard }) => {
+     const {
+    _createdAt,
+    views,
+    author,
+    title,
+    category,
+    _id,
+    image,
+    description,
+  } = post;
+
   return (
    <li className='startup-card group'>
     <div className="flex justify-between">
         <p className='startup_card_date'>
-            {formatDate(_createAt)}
+            {formatDate(_createdAt)}
         </p>
         <div className='flex gap-1.5'>
             <EyeIcon className="size-6 text-primary" />
@@ -35,9 +37,9 @@ const StartupCard = ({ post }: { post: StartupCardType }) => {
         </div>
         <div className='flex-between mt-5 gap-5'>
             <div className='flex-1'>
-                <Link href={`/user/${authorId}`}>
+                <Link href={`/user/${author?._id}`}>
                     <p className='text-16-medium line-clamp-1'>
-                        {name}
+                        {author?.name}
                     </p>
                 </Link>
                 <div className='flex justify-between gap-3'>
@@ -61,7 +63,7 @@ const StartupCard = ({ post }: { post: StartupCardType }) => {
 
                  {/* image footer */}
                  <div className='flex justify-between gap-3 mt-5'>
-                    <Link href={`/?query=${category.toLowerCase()}`}>
+                    <Link href={`/?query=${category?.toLowerCase()}`}>
                     <p className='font-medium'>{category}</p>
                     </Link>
                     <Button className='startup-card_btn hover:bg-white hover:text-black' asChild>
