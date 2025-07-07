@@ -11,6 +11,8 @@ import View from '@/components/View';
 
 const md = markdownit();
 
+// export const revalidate = 60; //cache the page
+
 export const experimental_ppr = true; //this enables partial page rendering for this page
 const page = async ({params} : {params: Promise<{id:string}>}) => {
     const id = (await params).id;

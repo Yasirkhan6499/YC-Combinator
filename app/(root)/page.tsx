@@ -2,7 +2,7 @@ import SearchForm from "@/components/SearchForm";
 import StartupCard from "@/components/StartupCard";
 import { STARTUPS_QUERY } from './../../sanity/lib/queries';
 import { sanityFetch, SanityLive } from "@/sanity/lib/live";
-
+import {auth} from "@/auth";
 
 
 
@@ -12,9 +12,11 @@ export default async function Home({searchParams}:
     const query = (await searchParams).query;
     const params = {search: query || null};
 
+    const session = await auth();
+    console.log("sessionnnn: ",session);
     // Fetching data from Sanity
     const {data: posts} = await sanityFetch({query: STARTUPS_QUERY, params});
-    console.log(JSON.stringify(posts, null, 2));
+    // console.log(JSON.stringify(posts, null, 2));
     //posts
     // const posts = [
     //   {
@@ -32,7 +34,7 @@ export default async function Home({searchParams}:
   
   return (
   <>
-  {console.log("StartupCard type:", typeof StartupCard)}
+  {/* {console.log("StartupCard type:", typeof StartupCard)} */}
   {/* Hero Section */}
   <section className="pink_container pattern">
     <h1 className="heading">Pitch Your Startup, <br />
