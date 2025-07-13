@@ -57,8 +57,8 @@ const page = async ({params} : {params: Promise<{id:string}>}) => {
 
            {/* author name*/}
            <div>
-            <p className='text-20-medium'>{post.author.name}</p>
-            <p className='text-16-medium !text-gray-400'>@{post.author.username}</p>
+            <p className='text-20-medium'>{post.author?.name ?? "Unknown name"}</p>
+            <p className='text-16-medium !text-gray-400'>@{post.author?.username ?? "Unknown author"}</p>
            </div>
           </Link>
           <p className="category-tag">{post.category}</p>
